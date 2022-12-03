@@ -1,0 +1,22 @@
+.table-hover .table-data {
+  transition: all 0.16s ease-in-out !important;
+}
+
+table .table-data:hover {
+  background-color: rgba(161, 158, 158, 0.432);
+}
+
+td,
+tr {
+  text-align: center;
+}
+
+.table-data-options {
+  padding-right: 24px;
+  transition: all 0.15s ease-in-out !important;
+}
+
+.table-data-options:hover {
+  transform: scale(1.5);
+  cursor: pointer;
+}

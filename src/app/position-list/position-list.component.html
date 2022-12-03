@@ -1,0 +1,23 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col" *ngFor="let key of dataKeys">{{ key | uppercase }} </th>
+            <th> CRUD Operations </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="table-data"  *ngFor="let employee of employeesTable">
+            <th scope="row">{{ employee.id }} </th>
+            <td>{{ employee.name }}</td>
+            <td>{{ employee.surname }}</td>
+            <td>{{ employee.positionCovered }}</td>
+            <td>{{ employee.busyOnTask }}</td>
+            <!-- Cells go here -->
+            <td>
+                <fa-icon [icon]="faEye" class="table-data-options"></fa-icon>
+                <fa-icon [icon]="faPencil" class="table-data-options"></fa-icon>
+                <fa-icon [icon]="faTrash" class="table-data-options"></fa-icon>
+            </td>
+        </tr>
+    </tbody>
+</table>
