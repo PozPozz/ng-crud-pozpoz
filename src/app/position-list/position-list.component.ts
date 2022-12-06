@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { PositionListItem } from '../../position-list-item';
 import { PositionDataService } from '../position-data.service';
 
-import { faEye, faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-position-list',
@@ -15,11 +14,6 @@ export class PositionListComponent implements OnInit {
   employeesTable: PositionListItem[] = [];
   dataKeys: string[] = [];
 
-  /* FontAwesome Icons */
-  faEye = faEye;
-  faPencil = faPencil;
-  faTrash = faTrash;
-  
   constructor(private posDataService: PositionDataService) { };
 
   getData(): void {

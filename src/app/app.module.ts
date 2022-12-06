@@ -8,12 +8,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PositionListComponent } from './position-list/position-list.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CrudOptionsComponent } from './crud-options/crud-options.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    PositionListComponent
+    PositionListComponent,
+    CrudOptionsComponent
   ],
   imports: [
     BrowserModule,
