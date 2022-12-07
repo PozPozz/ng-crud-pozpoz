@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Details</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <form>
+        <input type="text" value="{{employee.name}}" />
+        <input type="text" value="{{employee.surname}}" />
+        <br>
+        <input type="text" value="{{employee.positionCovered}}" />
+        <br>
+        <input type="checkbox" name="BusyOnTask" id="BusyOnTask" [checked]="employee.busyOnTask">
+
+    </form>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Save click')">Save</button>
+</div>
