@@ -4,31 +4,34 @@
 */
 
 #app__heading {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: whitesmoke;
-  background-color: #3f51b4;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: whitesmoke;
+    background-color: #3f51b4;
 }
 
 #app__heading h1 {
-  text-shadow: 2px 5px 10px #000;
+    text-shadow: 2px 5px 10px #000;
 }
 
 #app__footer {
-  width: 100%;
-  position: relative;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #app__footer hr {
-  width: 44%;
+    width: 40%;
+    padding: 6px;
 }
 
 #app__footer p {
-  color: rgb(110, 110, 110);
+    color: rgb(110, 110, 110);
+    padding-left: 16px;
+    padding-right: 16px;
 }

@@ -3,17 +3,43 @@
     <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
 </div>
 <div class="modal-body">
+    <div [ngClass]="{'justify-content-end': isModifying === false, 'justify-content-between': isModifying === true}" class="d-flex align-items-center">
+        <p [ngClass]="{'d-block':isModifying === true, 'd-none': isModifying === false}" class="modifyNotice">Attenzione. Modifica abilitata</p>
+        <button class="btn btn-flat" (click)="toggleModify()">
+      <fa-icon
+        [icon]="faPencil"
+        [ngClass]="{
+          'text-warning': isModifying === true,
+          'text-primary': isModifying === false
+        }"
+        class="fs-3"
+      ></fa-icon>
+    </button>
+    </div>
     <form>
-        <input type="text" value="{{employee.name}}" />
-        <input type="text" value="{{employee.surname}}" />
-        <br>
-        <input type="text" value="{{employee.positionCovered}}" />
-        <br>
-        <input type="checkbox" name="BusyOnTask" id="BusyOnTask" [checked]="employee.busyOnTask">
-
+        <div class="row g-3">
+            <div class="col-auto">
+                <label for="nameOfEmployee" class="form-label">Name</label>
+                <input type="text" class="form-control" id="nameOfEmployee" value="{{ employee.name }}" />
+            </div>
+            <div class="col-auto">
+                <label for="surnameOfEmployee" class="form-label">Surname</label>
+                <input type="text" class="form-control" id="surnameOfEmployee" value="{{ employee.surname }}" />
+            </div>
+        </div>
+        <br />
+        <div class="mb-3">
+            <label for="positionCovered" class="form-label">Position Covered</label>
+            <input type="text" class="form-control" id="positionCovered" value="{{ employee.positionCovered }}" />
+        </div>
+        <div class="mb-3 form-check">
+            <label class="form-check-label" for="busyOnTask">Busy On Task</label>
+            <input type="checkbox" class="form-check-input" id="busyOnTask" [checked]="employee.busyOnTask" />
+        </div>
     </form>
-
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Save click')">Save</button>
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Save click')">
+    Save
+  </button>
 </div>

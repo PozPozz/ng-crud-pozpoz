@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { PositionListItem } from 'src/position-list-item';
 import { ModalDismissReasons, NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { faPencil } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'app-modal-crud',
   templateUrl: './modal-crud.component.html',
@@ -10,6 +12,9 @@ import { ModalDismissReasons, NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-
 })
 export class ModalCrudComponent {
   employee!: PositionListItem;
+  isModifying: boolean = false;
+
+  faPencil = faPencil;
 
   constructor (private modalService: NgbModal, public activeModal: NgbActiveModal) { };
 
@@ -33,4 +38,8 @@ export class ModalCrudComponent {
 			return `with: ${reason}`;
 		}
 	}
+
+  toggleModify(){
+    this.isModifying = !this.isModifying;
+  }
 }
