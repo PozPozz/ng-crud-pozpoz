@@ -14,7 +14,7 @@
             <td>{{ employee.busyOnTask }}</td>
 
             <td>
-                <app-crud-options [id]="employee.id"></app-crud-options>
+                <app-crud-options [id]="employee.id" (dataChanged)="getData()"></app-crud-options>
             </td>
         </tr>
     </tbody>

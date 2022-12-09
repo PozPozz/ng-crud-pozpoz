@@ -26,22 +26,38 @@ export class PositionDataService {
       );
     }
     
-    getEmployeeById(id: number): Observable<PositionListItem> {
-      const url = `${this.dataUrl}/${id}`;
-      
-      return this.http.get<PositionListItem>(url).pipe(
-        tap(_ => console.log(`Fetched Employee with id: ${id}`)),
-        catchError(this.handleError<PositionListItem>('getEmployee [Employee with id: ${id}]'))
-        );
-      }
-      
-      private handleError<T>(operation = 'operation', result?: T){
-        return (error: any): Observable<T> => {
-          console.error(error);
+  getEmployeeById(id: number): Observable<PositionListItem> {
+    const url = `${this.dataUrl}/${id}`;
     
-          console.log(`${operation} failed: ${error.message}`);;
-          return of(result as T);
-        };
-      }
+    return this.http.get<PositionListItem>(url).pipe(
+      tap(_ => console.log(`Fetched Employee with id: ${id}`)),
+      catchError(this.handleError<PositionListItem>(`getEmployee [Employee with id: ${id}]`))
+      );
+  }
+
+  deleteEmployee(id: number): Observable<PositionListItem> {
+    const url = `${this.dataUrl}/${id}`;
+
+    return this.http.delete<PositionListItem>(url).pipe(
+      tap(_ => console.log(`Deleted Employee with id: ${id}`)),
+      catchError(this.handleError<PositionListItem>(`deleteEmployee [Employee with id: ${id}]`))
+    );
+  }
+
+  updateEmployee(employee: PositionListItem): Observable<PositionListItem> {
+    return this.http.put<PositionListItem>(this.dataUrl, employee, this.httpOptions).pipe(
+      tap(_ => console.log(`Modified Employee with id: ${employee.id}`)),
+      catchError(this.handleError<PositionListItem>(`updateEmployee [Employee with id ${employee.id}]`))
+    );
+  };
+      
+  private handleError<T>(operation = 'operation', result?: T){
+    return (error: any): Observable<T> => {
+      console.error(error);
+
+      console.log(`${operation} failed: ${error.message}`);;
+      return of(result as T);
+    };
+  }
   
 }

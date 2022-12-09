@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { PositionListItem } from 'src/position-list-item';
 import { PositionDataService } from '../position-data.service';
@@ -14,6 +14,7 @@ import { faEye, faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
 })
 export class CrudOptionsComponent implements OnInit {
   @Input() id!: number;
+  @Output() dataChanged: EventEmitter<any> = new EventEmitter();
 
   /* FontAwesome Icons */
   faEye = faEye;
@@ -27,22 +28,29 @@ export class CrudOptionsComponent implements OnInit {
 
   };
 
+  private getDismissReason(reason: any): string {
+		if (reason === ModalDismissReasons.ESC) {
+			return 'by pressing ESC';
+		} else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+			return 'by clicking on a backdrop';
+		} else {
+			return `with: ${reason}`;
+		}
+	}
+
   showDetails (id: number) {
     
     this.posDataService.getEmployeeById(id).subscribe(employee => {
-      console.log(employee);
       const modalRef = this.modalService.open(ModalCrudComponent);
       modalRef.componentInstance.employee = employee;
       
     }) 
   };
 
-  editDetails(id: number) {
-
-  }
-
   deleteItem(id: number) {
-
+    this.posDataService.deleteEmployee(id).subscribe(() => {
+      this.dataChanged.emit(null);
+    })
   }
 
 }

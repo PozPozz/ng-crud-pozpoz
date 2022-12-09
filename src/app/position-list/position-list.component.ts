@@ -22,7 +22,5 @@ export class PositionListComponent implements OnInit {
   
   ngOnInit(): void {
     this.getData();
-    
-
   }
 }
