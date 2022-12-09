@@ -15,6 +15,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CrudOptionsComponent } from './crud-options/crud-options.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalCrudComponent } from './modal-crud/modal-crud.component';
+import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
+import { AddPositionFabComponent } from './add-position-fab/add-position-fab.component';
+import { ModalAddComponent } from './modal-add/modal-add.component';
 
 
 @NgModule({
@@ -22,7 +25,10 @@ import { ModalCrudComponent } from './modal-crud/modal-crud.component';
     AppComponent,
     PositionListComponent,
     CrudOptionsComponent,
-    ModalCrudComponent
+    ModalCrudComponent,
+    ModalConfirmComponent,
+    AddPositionFabComponent,
+    ModalAddComponent
   ],
   imports: [
     CommonModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 
 import { PositionListItem } from 'src/position-list-item';
 import { ModalDismissReasons, NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -15,6 +15,8 @@ import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 export class ModalCrudComponent implements OnInit{
   employee!: PositionListItem;
   isModifying: boolean = false;
+
+  public dataUpdated: EventEmitter<boolean> = new EventEmitter();
 
   detailsForm!: FormGroup;
 
@@ -44,10 +46,19 @@ export class ModalCrudComponent implements OnInit{
 
   onSubmit() {
     let updatedPosition: PositionListItem;
-    updatedPosition = this.detailsForm.value; 
+    updatedPosition = {
+      id: this.employee.id,
+      name: this.detailsForm.value.nome,
+      surname: this.detailsForm.value.cognome,
+      positionCovered: this.detailsForm.value.positionCovered,
+      busyOnTask: this.detailsForm.value.busyOnTask,
+    }
 
     this.posDataService.updateEmployee(updatedPosition).subscribe(() => {
       console.log("Updated position from modal");
+      this.activeModal.dismiss('Updated Content');
+      this.dataUpdated.emit(true);
+      
     })
   }
 

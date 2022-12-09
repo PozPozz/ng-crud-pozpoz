@@ -1,0 +1,13 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Confirm Choice</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="d-flex align-items-center">
+        <p class="modifyNotice">Attenzione. Stai per eliminare l'elemento con Id -> {{ id }} <br> <br> Confermi?</p>
+        
+    </div>
+    <button type="button" class="btn btn-outline-danger float-end m-3" (click)="confirmSelection()">
+        Confirm
+    </button>
+</div>

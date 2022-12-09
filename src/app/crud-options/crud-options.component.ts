@@ -4,6 +4,7 @@ import { PositionListItem } from 'src/position-list-item';
 import { PositionDataService } from '../position-data.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ModalCrudComponent } from '../modal-crud/modal-crud.component';
+import { ModalConfirmComponent } from '../modal-confirm/modal-confirm.component';
 
 import { faEye, faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
 
@@ -28,29 +29,27 @@ export class CrudOptionsComponent implements OnInit {
 
   };
 
-  private getDismissReason(reason: any): string {
-		if (reason === ModalDismissReasons.ESC) {
-			return 'by pressing ESC';
-		} else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-			return 'by clicking on a backdrop';
-		} else {
-			return `with: ${reason}`;
-		}
-	}
-
   showDetails (id: number) {
     
     this.posDataService.getEmployeeById(id).subscribe(employee => {
       const modalRef = this.modalService.open(ModalCrudComponent);
       modalRef.componentInstance.employee = employee;
-      
+      modalRef.componentInstance.dataUpdated.subscribe((state: any) => {
+        this.dataChanged.emit(state)
+      })
     }) 
   };
 
   deleteItem(id: number) {
-    this.posDataService.deleteEmployee(id).subscribe(() => {
-      this.dataChanged.emit(null);
+
+    const modalRef = this.modalService.open(ModalConfirmComponent);
+    modalRef.componentInstance.id = id;
+    modalRef.componentInstance.confirmed.subscribe((state: any) => {
+      this.posDataService.deleteEmployee(id).subscribe(() => {
+        this.dataChanged.emit(state);
+      })
     })
+
   }
 
 }

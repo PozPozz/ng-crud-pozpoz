@@ -46,10 +46,17 @@ export class PositionDataService {
 
   updateEmployee(employee: PositionListItem): Observable<PositionListItem> {
     return this.http.put<PositionListItem>(this.dataUrl, employee, this.httpOptions).pipe(
-      tap(_ => console.log(`Modified Employee with id: ${employee.id}`)),
+      tap(_ => console.log(`Modified Employee with id: ${employee.id}`, employee)),
       catchError(this.handleError<PositionListItem>(`updateEmployee [Employee with id ${employee.id}]`))
     );
   };
+
+  addEmployee(employee: PositionListItem): Observable<PositionListItem> {
+    return this.http.post<PositionListItem>(this.dataUrl, employee, this.httpOptions).pipe(
+      tap(_ => console.log(`Added Employee with id: ${employee.id}`, employee)),
+      catchError(this.handleError<PositionListItem>(`addEmployee [Employee`))
+    );
+  }
       
   private handleError<T>(operation = 'operation', result?: T){
     return (error: any): Observable<T> => {
