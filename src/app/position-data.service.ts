@@ -19,12 +19,21 @@ export class PositionDataService {
   constructor(private http: HttpClient) { };
 
   
-  getEmployees(): Observable<PositionListItem[]>{
+  getEmployees(filterRegexp?: string): Observable<PositionListItem[]>{
+    if(filterRegexp){
+      const queryStringURL = `${this.dataUrl}/?${filterRegexp}`;
+
+      return this.http.get<PositionListItem[]>(queryStringURL).pipe(
+        tap(_ => console.log("Fetched Filtered Employees")),
+        catchError(this.handleError<PositionListItem[]>('getEmployees (Filtered)', []))
+      )
+    }
+
     return this.http.get<PositionListItem[]>(this.dataUrl).pipe(
       tap(_ => console.log("Fetched Employees")),
       catchError(this.handleError<PositionListItem[]>('getEmployees', []))
       );
-    }
+  }
     
   getEmployeeById(id: number): Observable<PositionListItem> {
     const url = `${this.dataUrl}/${id}`;

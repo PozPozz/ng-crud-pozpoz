@@ -3,25 +3,25 @@
     <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
 </div>
 <div class="modal-body">
-    <form  [formGroup]="newPositionForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="newPositionForm" (ngSubmit)="onSubmit()">
         <div class="row g-3">
             <div class="col-auto">
                 <label for="nameOfEmployee" class="form-label">Name</label>
-                <input type="text" class="form-control" id="nameOfEmployee" formControlName="nome"/>
+                <input type="text" class="form-control" id="nameOfEmployee" [(ngModel)]="model" [ngbTypeahead]="nameAutocomplete" formControlName="nome" />
             </div>
             <div class="col-auto">
                 <label for="surnameOfEmployee" class="form-label">Surname</label>
-                <input type="text" class="form-control" id="surnameOfEmployee" formControlName="cognome"/>
+                <input type="text" class="form-control" id="surnameOfEmployee" formControlName="cognome" />
             </div>
         </div>
         <br />
         <div class="mb-3">
             <label for="positionCovered" class="form-label">Position Covered</label>
-            <input type="text" class="form-control" id="positionCovered" formControlName="positionCovered"/>
+            <input type="text" class="form-control" id="positionCovered" formControlName="positionCovered" />
         </div>
         <div class="mb-3 form-check">
             <label class="form-check-label" for="busyOnTask">Busy On Task</label>
-            <input type="checkbox" class="form-check-input" id="busyOnTask" formControlName="busyOnTask"/>
+            <input type="checkbox" class="form-check-input" id="busyOnTask" formControlName="busyOnTask" />
         </div>
         <button type="submit" class="btn btn-outline-success float-end m-3" [disabled]="!newPositionForm.valid">
             Add
