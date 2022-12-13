@@ -28,5 +28,9 @@
 
 
 ## Current Task
-    - Add ordering (ASC, DESC) based on choosen field (Id, Name, Surname, etc...)
-    - Add autocomplete support within new insertion form based on existing values for each form field 
+   - Search functionality with filter expression
+   - Default ordering
+    - On Load -> ASC orde by ID
+    - First Click on Keys -> ASC Order by key
+    - Second Click on Keys -> DESC Order by key
+    - Third Click on Keys -> goes back to default ordering (OnLoad)
