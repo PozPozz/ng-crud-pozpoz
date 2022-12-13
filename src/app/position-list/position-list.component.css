@@ -18,3 +18,7 @@ th {
 .bold {
     font-weight: bold !important;
 }
+
+.inlineForce {
+    display: inline-block !important;
+}
