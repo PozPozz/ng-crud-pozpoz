@@ -10,3 +10,11 @@ td,
 tr {
     text-align: center;
 }
+
+th {
+    text-align: center;
+}
+
+.bold {
+    font-weight: bold !important;
+}

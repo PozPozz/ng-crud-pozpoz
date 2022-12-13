@@ -13,14 +13,23 @@ export class PositionListComponent implements OnInit {
 
   employeesTable: PositionListItem[] = [];
   dataKeys: string[] = [];
+  firstSort = true;
 
   constructor(private posDataService: PositionDataService) { };
 
-  getData(): void {
-    this.posDataService.getEmployees().subscribe(employees => {this.employeesTable = employees; this.dataKeys = Object.keys(this.employeesTable[0])});
+  getData(sortOptions?: string): void {
+    this.posDataService.getEmployees(sortOptions).subscribe(employees => {this.employeesTable = employees; this.dataKeys = Object.keys(this.employeesTable[0])});
   };
+
+  setSortParameters(key: string): void {
+    let order: string;
+    this.firstSort == true ? order = "asc" : order = "desc";
+    let sortString = `sort_by=${key}&sort_order=${order}`;
+    this.getData(sortString);
+    this.firstSort = !this.firstSort;
+  }
   
   ngOnInit(): void {
-    this.getData();
+    this.setSortParameters("id");
   }
 }

@@ -7,17 +7,17 @@
         <div class="row g-3">
             <div class="col-auto">
                 <label for="nameOfEmployee" class="form-label">Name</label>
-                <input type="text" class="form-control" id="nameOfEmployee" [(ngModel)]="model" [ngbTypeahead]="nameAutocomplete" formControlName="nome" />
+                <input type="text" class="form-control" id="nameOfEmployee" [(ngModel)]="nameModel" [ngbTypeahead]="nameAutocomplete" formControlName="nome" />
             </div>
             <div class="col-auto">
                 <label for="surnameOfEmployee" class="form-label">Surname</label>
-                <input type="text" class="form-control" id="surnameOfEmployee" formControlName="cognome" />
+                <input type="text" class="form-control" id="surnameOfEmployee" [(ngModel)]="surnameModel" [ngbTypeahead]="surnameAutocomplete" formControlName="cognome" />
             </div>
         </div>
         <br />
         <div class="mb-3">
             <label for="positionCovered" class="form-label">Position Covered</label>
-            <input type="text" class="form-control" id="positionCovered" formControlName="positionCovered" />
+            <input type="text" class="form-control" id="positionCovered" [(ngModel)]="positionModel" [ngbTypeahead]="positionCoveredAutocomplete" formControlName="positionCovered" />
         </div>
         <div class="mb-3 form-check">
             <label class="form-check-label" for="busyOnTask">Busy On Task</label>

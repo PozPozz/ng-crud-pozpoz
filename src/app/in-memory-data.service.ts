@@ -1,5 +1,6 @@
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { InMemoryDbService } from 'angular-in-memory-web-api';
+import { getStatusText, InMemoryDbService, RequestInfo, ResponseOptions, STATUS } from 'angular-in-memory-web-api';
 import { PositionListItem } from 'src/position-list-item';
 
 @Injectable({
@@ -42,4 +43,84 @@ export class InMemoryDataService implements InMemoryDbService {
   genId(employees: PositionListItem[]){
     return employees.length > 0 ? Math.max(...employees.map(employe => employe.id)) + 1: 1;
   }
+
+  get(reqInfo: RequestInfo) {
+    if(reqInfo.query.has('sort_by') && reqInfo.query.has('sort_order') && reqInfo.collection){
+      const sortBy = reqInfo.query.get('sort_by')![0];
+      const sortOrder = reqInfo.query.get('sort_order')![0].toUpperCase();
+
+      reqInfo.query.delete('sort_by');
+      reqInfo.query.delete('sort_order');
+
+      return reqInfo.utils.createResponse$(() => {
+        const collection = reqInfo.collection as Array<{id: any}>;
+
+        let data: any;
+        if(reqInfo.id) {
+          data = reqInfo.utils.findById(collection, reqInfo.id);
+        } else {
+          const filteredCollection = InMemoryDataService.applyQuery(collection, reqInfo.query);
+
+          if(sortOrder === "DESC"){
+          data = filteredCollection.sort((a, b) => {
+            return a[sortBy] < b[sortBy] ? 1 : -1;
+          });
+          } else if (sortOrder === "ASC"){
+            data = filteredCollection.sort((a, b) => {
+              return a[sortBy] > b[sortBy] ? 1 : -1;
+            });
+          } else {
+            data = filteredCollection;
+          }
+        }
+
+        const options: ResponseOptions = data ? 
+        {
+          body: data,
+          status: STATUS.OK 
+        } :
+        {
+          body: { error: `'${reqInfo.collectionName}' with id='${reqInfo.id}' not found` },
+          status: STATUS.NOT_FOUND
+        };
+
+        return InMemoryDataService.finishOptions(options, reqInfo);
+      });
+    } else {
+      return undefined;
+    }
+  }
+
+  private static finishOptions(options: ResponseOptions, {headers, url}: RequestInfo) {
+    options.statusText = getStatusText(options.status!);
+    options.headers = headers;
+    options.url = url;
+
+    return options;
+  }
+
+  private static applyQuery(collection: any[], query: Map<string, string[]>): any[] {
+    const conditions: any = [];
+    query.forEach((values, key) => {
+        values.forEach(value => { 
+          conditions.push({ key, rx: new RegExp(decodeURI(value), 'i') }); 
+        });
+    });
+
+    const len: number = conditions.length;
+    if (!len) {
+      return collection;
+    }
+
+    return collection.filter(row => {
+      let ok = true;
+      let i = len;
+      while(ok && i){
+        i -= 1;
+        const cond = conditions[i];
+        ok = cond.rx.test(row[cond.name]);
+      }
+      return ok;
+    });
+  };
 }

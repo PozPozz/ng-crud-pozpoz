@@ -1,8 +1,8 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <th scope="col" *ngFor="let key of dataKeys">{{ key | uppercase }} </th>
-            <th> CRUD Operations </th>
+            <th scope="col" *ngFor="let key of dataKeys"><button type="buton" class="btn bold" (click)="setSortParameters(key)">{{ key | uppercase }}</button> </th>
+            <th scope="col"><button type="buton" class="btn bold">CRUD Operations</button></th>
         </tr>
     </thead>
     <tbody>

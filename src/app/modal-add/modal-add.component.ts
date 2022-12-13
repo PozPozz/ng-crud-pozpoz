@@ -15,7 +15,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class ModalAddComponent implements OnInit {
   newPositionForm!: FormGroup;
-  public model: any;
+  public nameModel: any;
+  public surnameModel: any;
+  public positionModel: any;
+
 
   public positionAdded: EventEmitter<boolean> = new EventEmitter();
   autocompletes: string[][];
@@ -40,7 +43,7 @@ export class ModalAddComponent implements OnInit {
       nome: new FormControl('', Validators.required),
       cognome: new FormControl('', Validators.required),
       positionCovered: new FormControl('', Validators.required),
-      busyOnTask: new FormControl('', Validators.required)
+      busyOnTask: new FormControl('')
     });
   }
 
@@ -62,21 +65,33 @@ export class ModalAddComponent implements OnInit {
     map((term) => term.length < 2 ? [] : this.autocompletes[0].filter((val) => val.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10)),
   );
 
+  surnameAutocomplete: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) => text$.pipe(
+    debounceTime(200),
+    distinctUntilChanged(),
+    map((term) => term.length < 2 ? [] : this.autocompletes[1].filter((val) => val.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10)),
+  );
+
+  positionCoveredAutocomplete: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) => text$.pipe(
+    debounceTime(200),
+    distinctUntilChanged(),
+    map((term) => term.length < 2 ? [] : this.autocompletes[2].filter((val) => val.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10)),
+  )
+
   onSubmit() {
-    /* let newPosition = {
+    let newPosition = {
       name: this.newPositionForm.value.nome,
       surname: this.newPositionForm.value.cognome,
       positionCovered: this.newPositionForm.value.positionCovered,
-      busyOnTask: this.newPositionForm.value.busyOnTask,
+      busyOnTask: this.newPositionForm.value.busyOnTask === "" ? false : this.newPositionForm.value.busyOnTask,
     }
+
+    console.log(newPosition);
 
     this.posDataService.addEmployee(newPosition as PositionListItem).subscribe(employee => {
       console.log(`Added wmployee with id: ${employee.id}`);
       this.activeModal.dismiss('Added Employee');
       this.positionAdded.emit(true);
-    }); */
-
-    console.log('Autocompletes: ', this.autocompletes)
+    });
   }
 
 }
