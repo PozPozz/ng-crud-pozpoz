@@ -30,7 +30,7 @@
 ## Current Task
    - Search functionality with filter expression
    - Default ordering
-    - On Load -> ASC orde by ID
-    - First Click on Keys -> ASC Order by key
-    - Second Click on Keys -> DESC Order by key
-    - Third Click on Keys -> goes back to default ordering (OnLoad)
+        - On Load -> ASC orde by ID
+        - First Click on Keys -> ASC Order by key
+        - Second Click on Keys -> DESC Order by key
+        - Third Click on Keys -> goes back to default ordering (OnLoad)
