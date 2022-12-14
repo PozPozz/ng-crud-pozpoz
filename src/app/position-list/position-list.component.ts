@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { debounceTime, distinctUntilChanged, switchMap, Observable, ObservableInput, Subject } from 'rxjs';
 
 import { PositionListItem } from '../../position-list-item';
 import { PositionDataService } from '../position-data.service';
@@ -13,7 +14,9 @@ import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 })
 export class PositionListComponent implements OnInit {
 
+  private searchTerms = new Subject<string>(); 
   employeesTable: PositionListItem[] = [];
+  employeesTable$!: Observable<PositionListItem[]>;
   dataKeys: string[] = [];
   sortKeyId!: string;
   firstSort = true;
@@ -27,6 +30,8 @@ export class PositionListComponent implements OnInit {
     this.posDataService.getEmployees(sortOptions).subscribe(employees => {this.employeesTable = employees; this.dataKeys = Object.keys(this.employeesTable[0])});
   };
 
+
+//Modify: add parameter for optional filter RegExp that was already added
   setSortParameters(key: string): void {
     let order: string;
     this.firstSort == true ? order = "asc" : order = "desc";
@@ -41,8 +46,34 @@ export class PositionListComponent implements OnInit {
 
     this.firstSort = !this.firstSort;
   }
+
+  search(term: string): void {
+    this.searchTerms.next(term);
+
+    this.employeesTable$ = this.searchTerms.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((term: string) => this.posDataService.searchEmployeeByName(term))
+    )
+
+    this.employeesTable$.subscribe(employees => {
+      if(employees.length == 0){
+        this.employeesTable$ = this.searchTerms.pipe(
+          debounceTime(300),
+          distinctUntilChanged(),
+          switchMap((term: string) => this.posDataService.searchEmployeeBySurname(term))
+        )
+
+        this.employeesTable$.subscribe(employees => this.employeesTable = employees)
+      } else {
+        this.employeesTable = employees;
+      }
+    });
+    }
   
   ngOnInit(): void {
+    this.sortKeyId = 'id';
     this.setSortParameters("id");
+
   }
 }

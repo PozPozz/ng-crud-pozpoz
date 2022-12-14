@@ -66,6 +66,25 @@ export class PositionDataService {
       catchError(this.handleError<PositionListItem>(`addEmployee [Employee`))
     );
   }
+
+  searchEmployeeByName(term: string): Observable<PositionListItem[]> {
+    if (!term.trim()) return this.http.get<PositionListItem[]>(this.dataUrl).pipe(
+      tap(_ => console.log("Fetched Employees")),
+      catchError(this.handleError<PositionListItem[]>('getEmployees', []))
+      );;
+
+    return this.http.get<PositionListItem[]>(`${this.dataUrl}/?name=${term}`).pipe(
+      tap(x => x.length ? console.log(`Found employee matching ${term}`) : console.log('No employees matching') ),
+      catchError(this.handleError<PositionListItem[]>(`searchEmployee`, []))
+    );
+  }
+
+  searchEmployeeBySurname(term: string): Observable<PositionListItem[]> {
+    return this.http.get<PositionListItem[]>(`${this.dataUrl}/?surname=${term}`).pipe(
+      tap(x => x.length ? console.log(`Found employee matching ${term}`) : console.log('No employees matching') ),
+      catchError(this.handleError<PositionListItem[]>(`searchEmployee`, []))
+    );
+  }
       
   private handleError<T>(operation = 'operation', result?: T){
     return (error: any): Observable<T> => {

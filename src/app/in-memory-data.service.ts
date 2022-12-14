@@ -100,27 +100,26 @@ export class InMemoryDataService implements InMemoryDbService {
   }
 
   private static applyQuery(collection: any[], query: Map<string, string[]>): any[] {
-    const conditions: any = [];
-    query.forEach((values, key) => {
-        values.forEach(value => { 
-          conditions.push({ key, rx: new RegExp(decodeURI(value), 'i') }); 
-        });
-    });
 
-    const len: number = conditions.length;
-    if (!len) {
+  // extract filtering conditions - {propertyName, RegExps) - from query/search parameters
+  const conditions: any = [];
+  query.forEach((value, name) => {
+      value.forEach(v => conditions.push({ name, rx: new RegExp(decodeURI(v), 'i') }));
+  });
+  const len = conditions.length;
+  if (!len) {
       return collection;
-    }
-
-    return collection.filter(row => {
+  }
+  // AND the RegExp conditions
+  return collection.filter(row => {
       let ok = true;
       let i = len;
-      while(ok && i){
-        i -= 1;
-        const cond = conditions[i];
-        ok = cond.rx.test(row[cond.name]);
+      while (ok && i) {
+          i -= 1;
+          const cond = conditions[i];
+          ok = cond.rx.test(row[cond.name]);
       }
       return ok;
-    });
+  });
   };
 }
