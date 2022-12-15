@@ -79,7 +79,6 @@ export class ModalAddComponent implements OnInit {
 
   onSubmit() {
     let newPosition = {
-      id: 0,
       name: this.newPositionForm.value.nome,
       surname: this.newPositionForm.value.cognome,
       positionCovered: this.newPositionForm.value.positionCovered,

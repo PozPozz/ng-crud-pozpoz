@@ -71,7 +71,7 @@ export class PositionDataService {
     if (!term.trim()) return this.http.get<PositionListItem[]>(this.dataUrl).pipe(
       tap(_ => console.log("Fetched Employees")),
       catchError(this.handleError<PositionListItem[]>('getEmployees', []))
-      );;
+      );
 
     return this.http.get<PositionListItem[]>(`${this.dataUrl}/?name=${term}`).pipe(
       tap(x => x.length ? console.log(`Found employee matching ${term}`) : console.log('No employees matching') ),
