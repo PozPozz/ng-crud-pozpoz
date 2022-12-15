@@ -7,8 +7,8 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <th scope="col"><button type="button" class="btn bold" (click)="setSortParameters('id')" (dblclick)="setSortParameters('id', 'desc')" id="th__id">ID <fa-icon [icon]="faArrowDown" class="d-none" [ngClass]="{'inlineForce' : firstSort == false && sortKeyId == 'id'}"></fa-icon> <fa-icon [ngClass]="{'inlineForce' : firstSort == true && sortKeyId == 'id'}" class="d-none" [icon]="faArrrowUp"></fa-icon></button></th>
-            <th scope="col" *ngFor="let key of dataKeys"><button type="button" class="btn bold" (dblclick)="setSortParameters('id', 'desc')" (click)="setSortParameters(key)" id="th__{{key}}">{{ key | uppercase }} <fa-icon [icon]="faArrowDown" class="d-none" [ngClass]="{'inlineForce' : firstSort == false && sortKeyId == key}"></fa-icon> <fa-icon [ngClass]="{'inlineForce' : firstSort == true && sortKeyId == key}" class="d-none" [icon]="faArrrowUp"></fa-icon> </button></th>
+            <th scope="col"><button type="button" class="btn bold" (click)="setSortParameters('id')" (dblclick)="setSortParameters('id', 'asc')" id="th__id">ID <fa-icon [icon]="faArrowDown" class="d-none" [ngClass]="{'inlineForce' : firstSort == true && sortKeyId == 'id'}"></fa-icon> <fa-icon [ngClass]="{'inlineForce' : firstSort == false && sortKeyId == 'id'}" class="d-none" [icon]="faArrrowUp"></fa-icon></button></th>
+            <th scope="col" *ngFor="let key of dataKeys"><button type="button" class="btn bold" (dblclick)="setSortParameters('id', 'asc')" (click)="setSortParameters(key)" id="th__{{key}}">{{ key | uppercase }} <fa-icon [icon]="faArrowDown" class="d-none" [ngClass]="{'inlineForce' : firstSort == true && sortKeyId == key}"></fa-icon> <fa-icon [ngClass]="{'inlineForce' : firstSort == false && sortKeyId == key}" class="d-none" [icon]="faArrrowUp"></fa-icon> </button></th>
             <th scope="col"><button type="button" class="btn bold">CRUD Operations</button></th>
         </tr>
     </thead>
